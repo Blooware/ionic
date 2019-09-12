@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from "@ionic/angular";
+import { NavController, NavParams } from "@ionic/angular";
 import { LoginPage } from "../login/login";
-import { TabsPage } from "../tabs/tabs";
-import { CognitoServiceProvider } from "../../providers/cognito-service/cognito-service";
+import { AuthService } from "../cognito/auth.service";
 import { Storage } from '@ionic/storage';
 /**
  * Generated class for the ConfirmPage page.
@@ -11,7 +10,6 @@ import { Storage } from '@ionic/storage';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-confirm',
   templateUrl: 'confirm.html',
@@ -22,7 +20,7 @@ export class ConfirmPage {
   code = null
   error = null;
   hideMe = true;
-  constructor(public storage: Storage, public CognitoService: CognitoServiceProvider, public navCtrl: NavController, public navParams: NavParams, public appCtrl: App) {
+  constructor(public storage: Storage, public CognitoService: AuthService, public navCtrl: NavController, public navParams: NavParams) {
     this.email = navParams.get("e");
     this.pw = navParams.get("pw");
     if (this.email) {
@@ -58,14 +56,14 @@ export class ConfirmPage {
         this.storage.set('cog_user', { email: this.x.idToken.payload.email, password: this.pw });
 
     
-        this.appCtrl.getRootNav().push(TabsPage);
+       // this.appCtrl.getRootNav().push(TabsPage);
       }, err => {
         this.error = err.message;
       });
   }
 
   Login() {
-    this.appCtrl.getRootNav().push(LoginPage);
+   // this.appCtrl.getRootNav().push(LoginPage);
   }
 
 
