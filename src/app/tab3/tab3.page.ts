@@ -18,41 +18,16 @@ export class Tab3Page implements OnInit {
   num: string;
   results: Observable<any>;
   searchTerm: string = '';
-  // DI barcodeScanner
-  constructor(public navCtrl: NavController,
-   /* private barcodeScanner: BarcodeScanner,*/public aws: AwsProvider) {
-  }
-
-  ngOnInit() { }
+  constructor(public navCtrl: NavController, public aws: AwsProvider) {}
 
 
+  ngOnInit() {}
   data = {};
+
   lambdaForm() {
-    console.log("Lambda Form");
-    console.log(this.data)
     var data = this.data;
     this.aws.postToLambda('https://27a5ob9wp8.execute-api.eu-west-2.amazonaws.com/default/IonicTest-PostData', { data }, "Token").subscribe(reply => {
       console.log(reply);
-      console.log(reply.body.data);
-      
     });
   }
-
-  /*
-  setAccount(reply) {
-    console.log(reply);
-
-  }*/
-  /*
-    scan() {
-      this.barcodeScanner.scan().then(data => {
-          // this is called when a barcode is found
-          this.num = data.text
-        });      
-    }
-  */
-
-
-
-
 }
