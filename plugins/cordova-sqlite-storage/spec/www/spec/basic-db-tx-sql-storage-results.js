@@ -538,7 +538,7 @@ var mytests = function() {
                   expect(res.rows.item(0).data_num).toBe(100);
                 });
 
-                tx.executeSql(';; SELECT data FROM test_table;', [], function(tx, res) {
+                tx.executeSql('; SELECT data FROM test_table;', [], function(tx, res) {
                   ++check_count;
 
                   expect(res.rows.length).toBe(1);

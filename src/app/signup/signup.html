@@ -1,0 +1,73 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<ion-content padding>
+  <form (ngSubmit)="register()" class="text-center justify-content-center align-items-center align-content-center align-self-center flex-nowrap m-auto"
+    style="padding: 40px;max-width: 512px;">
+   
+    <img src="../../assets/imgs/logo.png" width="70%" class="d-block justify-content-center m-auto" style="width: 70%;margin-bottom: 10px;padding-top: 60px;"
+    />
+    <p class="text-center" style="color: red;padding-top: 20px; font-weight: bold;" >{{error}}</p>
+    <div class="form-group" style="margin-top: 50px;">
+      <ion-item>
+        <ion-input [(ngModel)]="e" type="email" name="email" required placeholder="Email" style="margin-top: 10px;"></ion-input>
+      </ion-item>
+    </div>
+    <div class="form-group">
+      <ion-item>
+        <ion-input [(ngModel)]="p" type="password" name="password" required placeholder="Password"></ion-input>
+      </ion-item>
+    </div>
+    <div class="form-group">
+      <ion-item>
+        <ion-input [(ngModel)]="cp" type="password" name="password" required placeholder="Confirm Password"></ion-input>
+      </ion-item>
+    </div>
+  
+    <div class="form-group" style="padding-top: 20px;">
+      <button ion-button type="submit" style="margin-top: 10px;border-radius: 300px;background-color: #4286b7;border: 0px;outline: none;width: 90%;">Agree to Terms and Sign Up</button>
+    </div>
+    <div class="form-group" style="padding-top: 10px;">
+      <button ion-button type="button" (click)="Confirm()" style="margin-top: 10px;border-radius: 300px;background-color: #ccc;color:#000;border: 0px;outline: none;width: 90%;">Confirm Account</button>
+    </div>
+    <div class="form-group" style="padding-top: 10px;">
+      <button ion-button type="button" (click)="Login()" style="margin-top: 10px;border-radius: 300px;background-color: transparent;border: 0px;outline: none;width: 90%;color:#0078db;">Cancel</button>
+    </div>
+    
+    <p style="margin-top: 15px;padding-top: 137px;">
+      <a (click)="terms()"  class="forgot">Terms &amp; Conditions</a> |
+      <a (click)="privacy()" class="forgot">Privacy Policy</a>
+    </p>
+  </form>
+  <script type="in/Login"></script>
+
+  <script type="text/javascript" src="//platform.linkedin.com/in.js">
+    api_key: "7729rzi4ac22lq"
+    authorize: true
+    onLoad: onLinkedInLoad
+  </script>
+  <script type="text/javascript">
+
+    // Setup an event listener to make an API call once auth is complete
+    function onLinkedInLoad() {
+      
+      IN.Event.on(IN, "auth", getProfileData);
+    }
+
+    // Handle the successful return from the API call
+    function onSuccess(data) {
+      console.log(data);
+    }
+
+    // Handle an error response from the API call
+    function onError(error) {
+      console.log(error);
+    }
+
+    // Use the API call wrapper to request the member's basic profile data
+    function getProfileData() {
+      IN.API.Raw("/people/~").result(onSuccess).error(onError);
+    }
+
+  </script>
+</ion-content>
