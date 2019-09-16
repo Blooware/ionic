@@ -29,7 +29,8 @@ export class AppComponent {
 
       this.authenticationService.authenticationState.subscribe(state => {
         if (state) {
-          this.navigate.to(['members']);
+          this.navigate.to(['']);
+          console.log("hbkjfdjkhb");
         } else {
           this.navigate.to(['login']);
         }

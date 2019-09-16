@@ -5,12 +5,21 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ContactPage } from './contact.page';
+import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: '',
-    component: ContactPage
+    path: 'tabs',
+    component: TabsPage,
+    children:[
+        { path: 'tab1', loadChildren: '../tab1/tab1.module#Tab1PageModule' },
+        { path: 'tab2', loadChildren: '../tab2/tab2.module#Tab2PageModule' },
+    ]
+  },
+  {
+    path:'',
+    redirectTo:'/tabs/tab1',
+    pathMatch:'full'
   }
 ];
 
@@ -21,6 +30,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ContactPage]
+  declarations: [TabsPage]
 })
-export class ContactPageModule {}
+export class TabsPageModule {}

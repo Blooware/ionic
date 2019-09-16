@@ -17,7 +17,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 import { IonicStorageModule } from '@ionic/storage';
-import { AwsProvider } from './members/api/user.service';
+import { AwsProvider } from './api/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './cognito/auth.service';
 import { NavigateService } from './navigate.service';

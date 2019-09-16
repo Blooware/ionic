@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from "@ionic/angular";
-import { AuthService } from "../cognito/auth.service";
+import { AuthService } from "../../cognito/auth.service";
 import { LoginPage } from "../login/login";
-import { NavigateService } from '../navigate.service';
+import { NavigateService } from '../../navigate.service';
 
 /**
  * Generated class for the ResetPasswordPage page.

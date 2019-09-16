@@ -10,26 +10,90 @@ import { BehaviorSubject } from 'rxjs';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
+
+
+const TOKEN_KEY = 'auth-token';
+ 
+
 @Injectable()
 export class AuthService {
 
   authenticationState = new BehaviorSubject(false);
-  constructor(public http: HttpClient, public storage: Storage, public plt : Platform) {
-    console.log('Hello CognitoServiceProvider Provider');
-    this.plt.ready().then(() => {
-      this.refresh();
-    });
-  }
-
-  isAuthenticated() {
-    return this.authenticationState.value;
-  }
-
-
   _POOL_DATA = {
     UserPoolId: "eu-west-2_d2B9fAZQy",
     ClientId: "3fvchqqlm2ke28c8i9cftli9h7"
   };
+
+  constructor(public http: HttpClient, public storage: Storage, public plt: Platform) {
+    this.plt.ready().then(() => {
+      this.checkToken();
+    });
+  }
+
+  checkToken() {
+    this.storage.get(TOKEN_KEY).then(res => {
+      if (res) {
+        this.authenticationState.next(true);
+      }
+    })
+  }
+ 
+  login(email, password) {
+
+    return new Promise((resolved, reject) => {
+      const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
+
+      const authDetails = new AWSCognito.AuthenticationDetails({
+        Username: email,
+        Password: password
+      });
+
+      const cognitoUser = new AWSCognito.CognitoUser({
+        Username: email,
+        Pool: userPool
+      });
+
+      cognitoUser.authenticateUser(authDetails, {
+        onSuccess: result => {
+          this.storage.set(TOKEN_KEY, result).then(() => {
+            this.authenticationState.next(true);
+          });
+
+          resolved(result);
+        },
+        onFailure: err => {
+          reject(err);
+        },
+        newPasswordRequired: userAttributes => {
+          // User was signed up by an admin and must provide new
+          // password and required attributes, if any, to complete
+          // authentication.
+
+          // the api doesn't accept this field back
+          userAttributes.email = email;
+          delete userAttributes.email_verified;
+
+          cognitoUser.completeNewPasswordChallenge(password, userAttributes, {
+            onSuccess: function (result) { },
+            onFailure: function (error) {
+              reject(error);
+            }
+          });
+        }
+      });
+    });
+    
+  }
+ 
+  logout() {
+    return this.storage.remove(TOKEN_KEY).then(() => {
+      this.authenticationState.next(false);
+    });
+  }
+ 
+  isAuthenticated() {
+    return this.authenticationState.value;
+  }
 
   signUp(email, password) {
     return new Promise((resolved, reject) => {
@@ -46,6 +110,27 @@ export class AuthService {
         } else {
           resolved(result);
         }
+      });
+    });
+  }
+
+  confirmPassword(userName, verificationCode, newPassword) {
+    const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
+
+    // setup cognitoUser first
+    const cognitoUser = new AWSCognito.CognitoUser({
+      Username: userName,
+      Pool: userPool
+    });
+
+    return new Promise((resolve, reject) => {
+      cognitoUser.confirmPassword(verificationCode, newPassword, {
+        onFailure(err) {
+          reject(err);
+        },
+        onSuccess() {
+          resolve();
+        },
       });
     });
   }
@@ -69,33 +154,34 @@ export class AuthService {
     });
   }
 
+
+
+
+  /*
+ 
+
+  
+
   refresh() {
     var x = this.storage;
     var dis = this;
     return new Promise((resolved, reject) => {
       const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
-
       const cognitoUser = userPool.getCurrentUser();
-
-
       if (cognitoUser != null) {
         cognitoUser.getSession(function (err, session) {
           if (err) {
-
             this.signOut();
           } else {
-
-            x.set('session', session.idToken.jwtToken).then((val) => { 
+            x.set('session', session.idToken.jwtToken).then((val) => {
               dis.authenticationState.next(true);
               resolved(session.idToken.jwtToken);
             });
           }
         });
       }
-
     });
   }
-
 
   public signOut() {
     var dis = this;
@@ -106,54 +192,12 @@ export class AuthService {
       const cognitoUser = userPool.getCurrentUser();
 
       cognitoUser.signOut();
-     
-      x.remove('session').then(() => { 
+
+      x.remove('session').then(() => {
         dis.authenticationState.next(false);
-      
+
       });
       resolved();
-    });
-  }
-
-  login(email, password) {
-    return new Promise((resolved, reject) => {
-      const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
-
-      const authDetails = new AWSCognito.AuthenticationDetails({
-        Username: email,
-        Password: password
-      });
-
-      const cognitoUser = new AWSCognito.CognitoUser({
-        Username: email,
-        Pool: userPool
-      });
-
-      cognitoUser.authenticateUser(authDetails, {
-        onSuccess: result => {
-          resolved(result);
-          this.authenticationState.next(true);
-        },
-        onFailure: err => {
-          reject(err);
-        },
-        newPasswordRequired: userAttributes => {
-          // User was signed up by an admin and must provide new
-          // password and required attributes, if any, to complete
-          // authentication.
-
-          // the api doesn't accept this field back
-          userAttributes.email = email;
-          delete userAttributes.email_verified;
-
-          cognitoUser.completeNewPasswordChallenge(password, userAttributes, {
-            onSuccess: function (result) { },
-            onFailure: function (error) {
-              reject(error);
-            }
-          });
-        }
-      });
     });
   }
 
@@ -178,29 +222,10 @@ export class AuthService {
         var verificationCode = prompt('Please input verification code ', '');
         var newPassword = prompt('Enter new password ', '');
         cognitoUser.confirmPassword(verificationCode, newPassword, this);
-      }*/
+      }
     });
   }
 
-  confirmPassword(userName, verificationCode, newPassword) {
-    const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
-
-    // setup cognitoUser first
-    const cognitoUser = new AWSCognito.CognitoUser({
-      Username: userName,
-      Pool: userPool
-    });
-
-    return new Promise((resolve, reject) => {
-        cognitoUser.confirmPassword(verificationCode, newPassword, {
-            onFailure(err) {
-                reject(err);
-            },
-            onSuccess() {
-                resolve();
-            },
-        });
-    });
-}
+  */
 
 }

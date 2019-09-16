@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from "@ionic/angular";
 import { LoginPage } from "../login/login";
-import { AuthService } from "../cognito/auth.service";
+import { AuthService } from "../../cognito/auth.service";
 import { Storage } from '@ionic/storage';
 /**
  * Generated class for the ConfirmPage page.
@@ -47,7 +47,7 @@ export class ConfirmPage {
 
   x = null;
   autoLogin(){
-    this.CognitoService.authenticate(this.email, this.pw)
+    this.CognitoService.login(this.email, this.pw)
       .then(res => {
         this.x = res;
         console.log(res);
