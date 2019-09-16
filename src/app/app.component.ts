@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AuthService } from './cognito/auth.service';
+import { AuthService } from './services/cognito/auth.service';
 import { NavigateService } from './navigate.service';
 
 @Component({

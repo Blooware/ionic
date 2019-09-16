@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from "@ionic/angular";
-import { AuthService } from "../../cognito/auth.service";
+import { AuthService } from "../../services/cognito/auth.service";
 import { LoginPage } from "../login/login";
 import { NavigateService } from '../../navigate.service';
 

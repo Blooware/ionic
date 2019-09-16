@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../cognito/auth.service';
+import { AuthService } from '../services/cognito/auth.service';
 
 @Component({
   selector: 'app-tab1',

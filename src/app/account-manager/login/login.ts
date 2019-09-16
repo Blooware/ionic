@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SignupPage } from "../signup/signup";
 import { Storage } from '@ionic/storage';
 import { ResetPasswordPage } from "../reset-password/reset-password";
-import { AuthService } from "../../cognito/auth.service";
+import { AuthService } from "../../services/cognito/auth.service";
 import { AlertController } from "@ionic/angular";
 import { NavigateService } from '../../navigate.service';
 import { Router, ActivatedRoute } from '@angular/router';

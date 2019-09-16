@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams} from "@ionic/angular";
 import { ConfirmPage } from "../confirm/confirm";
 import { LoginPage } from "../login/login";
-import { AuthService } from "../../cognito/auth.service";
+import { AuthService } from "../../services/cognito/auth.service";
 import { NavigateService } from '../../navigate.service';
 /**
  * Generated class for the SignupPage page.

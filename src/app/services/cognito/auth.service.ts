@@ -4,6 +4,7 @@ import * as AWSCognito from "amazon-cognito-identity-js";
 import { Storage } from "@ionic/storage";
 import { Platform } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
+import {awsConfig} from "./config";
 /*
   Generated class for the CognitoServiceProvider provider.
 
@@ -19,17 +20,15 @@ const TOKEN_KEY = 'auth-token';
 export class AuthService {
 
   authenticationState = new BehaviorSubject(false);
-  _POOL_DATA = {
-    UserPoolId: "eu-west-2_d2B9fAZQy",
-    ClientId: "3fvchqqlm2ke28c8i9cftli9h7"
-  };
+  
 
-  constructor(public http: HttpClient, public storage: Storage, public plt: Platform) {
+  constructor(public http: HttpClient, public storage: Storage, public plt: Platform, public config : awsConfig) {
     this.plt.ready().then(() => {
       this.checkToken();
     });
   }
 
+  _POOL_DATA = this.config.data;
   checkToken() {
     this.storage.get(TOKEN_KEY).then(res => {
       if (res) {

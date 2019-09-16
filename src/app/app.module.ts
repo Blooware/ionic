@@ -17,10 +17,11 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 import { IonicStorageModule } from '@ionic/storage';
-import { AwsProvider } from './api/user.service';
+import { AwsProvider } from './services/api/user.service';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from './cognito/auth.service';
+import { AuthService } from './services/cognito/auth.service';
 import { NavigateService } from './navigate.service';
+import { awsConfig } from './services/cognito/config';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,7 @@ import { NavigateService } from './navigate.service';
     AwsProvider,
     AuthService,
     NavigateService,    
+    awsConfig,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
