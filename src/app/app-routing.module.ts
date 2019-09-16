@@ -14,7 +14,8 @@ const routes: Routes = [
     path: 'members',
     canActivate: [AuthGuardService],
     loadChildren: './members/members.module#MembersPageModule'
-  }
+  },  { path: 'home', loadChildren: './members/home/home.module#HomePageModule' }
+
 
 
 ];

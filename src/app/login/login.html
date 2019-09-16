@@ -2,11 +2,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 <ion-content padding>
-  <form (ngSubmit)="logForm()" class="text-center justify-content-center align-items-center align-content-center align-self-center flex-nowrap m-auto"
+  <form (ngSubmit)="login()" class="text-center justify-content-center align-items-center align-content-center align-self-center flex-nowrap m-auto"
     style="padding: 40px;max-width: 512px;">
 
-    <img src="../../assets/imgs/logo.png" width="70%" class="d-block justify-content-center m-auto" style="width: 70%;margin-bottom: 10px;padding-top: 60px;" />
-    <p class="text-center" style="padding-top: 20px; font-weight: bold;">{{message}}</p>
+     <p class="text-center" style="padding-top: 20px; font-weight: bold;">{{message}}</p>
     <p class="text-center" style="color: red;padding-top: 20px; font-weight: bold;">{{error}}</p>
     <div class="form-group" style="margin-top: 50px;" *ngIf="showForm">
       <ion-item>
@@ -17,13 +16,12 @@
       <ion-item>
         <ion-input [(ngModel)]="loginForm.password"  [type]="getType()" name="password" required placeholder="Password"></ion-input>
         <ion-icon name="eye" item-right (click)="toggleTextPassword()"></ion-icon>
-      </ion-item>
-      
+      </ion-item>     
     
     </div>
+
     <div class="form-group" style="padding-top: 20px;">
-      <button ion-button type="submit" style="margin-top: 10px;border-radius: 300px;background-color: #4286b7;border: 0px;outline: none;width: 90%;">Log
-        In</button>
+      <ion-button type="submit" style="width: 90%;">Log In</ion-button>
     </div>
 
     <div class="form-group"  *ngIf="showForm">

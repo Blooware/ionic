@@ -82,7 +82,7 @@ export class AuthService {
         cognitoUser.getSession(function (err, session) {
           if (err) {
 
-            reject(err);
+            this.signOut();
           } else {
 
             x.set('session', session.idToken.jwtToken).then((val) => { 
@@ -96,18 +96,26 @@ export class AuthService {
     });
   }
 
-  signOut() {
+
+  public signOut() {
+    var dis = this;
+    var x = this.storage;
     return new Promise((resolved, reject) => {
       const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
 
       const cognitoUser = userPool.getCurrentUser();
 
       cognitoUser.signOut();
+     
+      x.remove('session').then(() => { 
+        dis.authenticationState.next(false);
+      
+      });
       resolved();
     });
   }
 
-  authenticate(email, password) {
+  login(email, password) {
     return new Promise((resolved, reject) => {
       const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
 
@@ -124,6 +132,7 @@ export class AuthService {
       cognitoUser.authenticateUser(authDetails, {
         onSuccess: result => {
           resolved(result);
+          this.authenticationState.next(true);
         },
         onFailure: err => {
           reject(err);

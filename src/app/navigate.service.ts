@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 
 
@@ -10,14 +11,20 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class NavigateService {
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, public navCtrl : NavController) { }
 
 
-  public to(page, params?) {
+  public to(page, root?, params?) {
     let navigationExtras: NavigationExtras = {
       queryParams: params
     };
-    this.router.navigate(page, navigationExtras);
+
+    if (root == true) {
+      this.navCtrl.navigateRoot(page, navigationExtras);
+      console.log("ROOT");
+    } else {
+      this.router.navigate(page, navigationExtras);
+    }
   }
 
 }
