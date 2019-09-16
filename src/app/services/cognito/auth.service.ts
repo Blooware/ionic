@@ -5,13 +5,6 @@ import { Storage } from "@ionic/storage";
 import { Platform } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import {awsConfig} from "./config";
-/*
-  Generated class for the CognitoServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-
 
 const TOKEN_KEY = 'auth-token';
  
@@ -21,7 +14,6 @@ export class AuthService {
 
   authenticationState = new BehaviorSubject(false);
   
-
   constructor(public http: HttpClient, public storage: Storage, public plt: Platform, public config : awsConfig) {
     this.plt.ready().then(() => {
       this.checkToken();
