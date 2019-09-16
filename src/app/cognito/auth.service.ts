@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as AWSCognito from "amazon-cognito-identity-js";
 import { Storage } from "@ionic/storage";
+import { Platform } from '@ionic/angular';
+import { BehaviorSubject } from 'rxjs';
 /*
   Generated class for the CognitoServiceProvider provider.
 
@@ -11,12 +13,22 @@ import { Storage } from "@ionic/storage";
 @Injectable()
 export class AuthService {
 
-  constructor(public http: HttpClient, public storage: Storage) {
+  authenticationState = new BehaviorSubject(false);
+  constructor(public http: HttpClient, public storage: Storage, public plt : Platform) {
     console.log('Hello CognitoServiceProvider Provider');
+    this.plt.ready().then(() => {
+      this.refresh();
+    });
   }
+
+  isAuthenticated() {
+    return this.authenticationState.value;
+  }
+
+
   _POOL_DATA = {
-    UserPoolId: "eu-west-2_17eYEYmhj",
-    ClientId: "25hdjuvc63kqnuej5ovllhaurn"
+    UserPoolId: "eu-west-2_d2B9fAZQy",
+    ClientId: "3fvchqqlm2ke28c8i9cftli9h7"
   };
 
   signUp(email, password) {
@@ -59,6 +71,7 @@ export class AuthService {
 
   refresh() {
     var x = this.storage;
+    var dis = this;
     return new Promise((resolved, reject) => {
       const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
 
@@ -71,7 +84,9 @@ export class AuthService {
 
             reject(err);
           } else {
-            x.set('session', session.idToken.jwtToken).then((val) => {
+
+            x.set('session', session.idToken.jwtToken).then((val) => { 
+              dis.authenticationState.next(true);
               resolved(session.idToken.jwtToken);
             });
           }

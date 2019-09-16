@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App} from "@ionic/angular";
+import { NavController, NavParams} from "@ionic/angular";
 import { ConfirmPage } from "../confirm/confirm";
 import { LoginPage } from "../login/login";
-import { CognitoServiceProvider } from "../../providers/cognito-service/cognito-service";
+import { AuthService } from "../cognito/auth.service";
+import { NavigateService } from '../navigate.service';
 /**
  * Generated class for the SignupPage page.
  *
@@ -10,7 +11,6 @@ import { CognitoServiceProvider } from "../../providers/cognito-service/cognito-
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
@@ -20,17 +20,16 @@ export class SignupPage {
   p: string;
   cp: string;
   error = null;
-  constructor(public CognitoService:CognitoServiceProvider, public navCtrl: NavController, public navParams: NavParams, public appCtrl: App) {
+  constructor(public cognitoService: AuthService, public navCtrl: NavController, public navParams: NavParams, public navigate : NavigateService) {
   }
 
   register() {
 
     if(this.cp == this.p){
-      this.CognitoService.signUp(this.e, this.p).then(
+      this.cognitoService.signUp(this.e, this.p).then(
         res => {
           console.log(res);
-          console.log()
-          this.appCtrl.getRootNav().push(LoginPage, {message: "You need to verify your account. Check your email for the verification link (It may be in the Junk folder)", p : this.p, e: this.e});
+          this.navigate.to('login', {message: "You need to verify your account. Check your email for"}) 
         },
         err => {
           console.log(err);
@@ -48,11 +47,13 @@ export class SignupPage {
   }
 
   Login() {
-    this.appCtrl.getRootNav().push(LoginPage);
+    //this.appCtrl.getRootNav().push(LoginPage);
+    this.navigate.to('login');
   }
   
   Confirm() {
-    this.appCtrl.getRootNav().push(ConfirmPage);
+    //this.appCtrl.getRootNav().push(ConfirmPage);
+    this.navigate.to('confirm');
   }
 
   privacy() {

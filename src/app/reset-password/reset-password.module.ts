@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from "@ionic/angular";
+import { RouterModule } from '@angular/router';
 import { ResetPasswordPage } from './reset-password';
 
 @NgModule({
@@ -7,7 +7,7 @@ import { ResetPasswordPage } from './reset-password';
     ResetPasswordPage,
   ],
   imports: [
-    IonicPageModule.forChild(ResetPasswordPage),
+    RouterModule.forChild([{ path: '', component: ResetPasswordPage }])
   ],
 })
 export class ResetPasswordPageModule {}

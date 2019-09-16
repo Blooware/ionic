@@ -10,7 +10,7 @@ import { NavController } from "@ionic/angular";
 export class TabsPage {
 
   constructor(public navCtrl: NavController) {
-
+console.log("hello");
 
 
   }

@@ -1,5 +1,8 @@
+import { IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from "@ionic/angular";
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { LoginPage } from './login';
 
 @NgModule({
@@ -7,7 +10,10 @@ import { LoginPage } from './login';
     LoginPage,
   ],
   imports: [
-    IonicPageModule.forChild(LoginPage),
+    IonicModule,
+    CommonModule,
+    FormsModule,
+    RouterModule.forChild([{ path: '', component: LoginPage }])
   ],
 })
 export class LoginPageModule {}

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from "@ionic/angular";
-import { TabsPage } from "../tabs/tabs";
 import { SignupPage } from "../signup/signup";
 import { Storage } from '@ionic/storage';
 import { ResetPasswordPage } from "../reset-password/reset-password";
-import { CognitoServiceProvider } from "../../providers/cognito-service/cognito-service";
+import { AuthService } from "../cognito/auth.service";
 import { AlertController } from "@ionic/angular";
+import { NavigateService } from '../navigate.service';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 /**
  * Generated class for the LoginPage page.
@@ -14,7 +15,6 @@ import { AlertController } from "@ionic/angular";
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -24,13 +24,26 @@ export class LoginPage {
   error = null;
   message = null;
   showForm = true;
-  constructor(public storage: Storage, private alertCtrl: AlertController, public cognitoService: CognitoServiceProvider, public navCtrl: NavController, public navParams: NavParams, public appCtrl: App) {
-    this.message = navParams.get("message");
-    if (navParams.get("p")) {
-      this.showForm = false;
-      this.loginForm.password = navParams.get("p");
-      this.loginForm.email = navParams.get("e");
-    }
+
+  data : any;
+
+  constructor(public storage: Storage, private alertCtrl: AlertController, public cognitoService: AuthService, public navigate: NavigateService, public route : ActivatedRoute, public router : Router) {
+
+    this.route.queryParams.subscribe(params => {
+      if (params && params.special) {
+        let navParams = params;// = JSON.parse(params.special);
+
+
+
+        this.message = navParams.get("message");
+        if (navParams.get("p")) {
+          this.showForm = false;
+          this.loginForm.password = navParams.get("p");
+          this.loginForm.email = navParams.get("e");
+        }
+      }
+    });
+  
     this.cognitoService.refresh().then(val => {
       if (val) {
         console.log(val);
@@ -74,18 +87,23 @@ export class LoginPage {
   forgotPassword() {
     if (this.loginForm.email) {
       this.cognitoService.resetPassword(this.loginForm.email);
-      this.appCtrl.getRootNav().push(ResetPasswordPage, { email: this.loginForm.email });
+
+      this.navigate.to('reset', { email: this.loginForm.email });
+
+
     } else {
       this.error = "Please enter your email";
     }
   }
 
   pushPage() {
-    this.appCtrl.getRootNav().push(TabsPage);
+    // this.appCtrl.getRootNav().push(TabsPage);
+    this.navigate.to(['members', 'home']);
   }
 
   signUp() {
-    this.appCtrl.getRootNav().push(SignupPage);
+    //  this.appCtrl.getRootNav().push(SignupPage);
+    this.navigate.to('signUp');
   }
   isActiveToggleTextPassword: Boolean = true;
   public toggleTextPassword(): void {
@@ -94,6 +112,7 @@ export class LoginPage {
   public getType() {
     return this.isActiveToggleTextPassword ? 'password' : 'text';
   }
+
 
 
 }

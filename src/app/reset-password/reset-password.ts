@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from "@ionic/angular";
-import { CognitoServiceProvider } from "../../providers/cognito-service/cognito-service";
+import { NavController, NavParams } from "@ionic/angular";
+import { AuthService } from "../cognito/auth.service";
 import { LoginPage } from "../login/login";
+import { NavigateService } from '../navigate.service';
 
 /**
  * Generated class for the ResetPasswordPage page.
@@ -10,7 +11,6 @@ import { LoginPage } from "../login/login";
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-reset-password',
   templateUrl: 'reset-password.html',
@@ -19,7 +19,7 @@ export class ResetPasswordPage {
 
   error = null;
   loginForm = { password: null, code: null, email: null }
-  constructor(public navCtrl: NavController, public navParams: NavParams, private cognitoService: CognitoServiceProvider, public appCtrl : App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public cognitoService: AuthService, public navigate : NavigateService) {
     this.loginForm.email = navParams.get("email");
   }
 
@@ -30,14 +30,17 @@ export class ResetPasswordPage {
 
   confirmReset() {
     this.cognitoService.confirmPassword(this.loginForm.email, this.loginForm.code, this.loginForm.password).then(val => {
-      this.appCtrl.getRootNav().push(LoginPage, {message : "Password reset successful. Login below."});
+     // this.appCtrl.getRootNav().push(LoginPage, {message : "Password reset successful. Login below."});
+
+      this.navigate.to('login', {message : "Password reset successful. Login below."});
     }, err => {
       this.error = err.message;
     });
   }
 
   logIn(){
-    this.appCtrl.getRootNav().push(LoginPage);
+   // this.appCtrl.getRootNav().push(LoginPage);
+    this.navigate.to('login');
   }
 
   

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from "@ionic/angular";
+import { RouterModule } from '@angular/router';
 import { ConfirmPage } from './confirm';
 
 @NgModule({
@@ -7,7 +7,7 @@ import { ConfirmPage } from './confirm';
     ConfirmPage,
   ],
   imports: [
-    IonicPageModule.forChild(ConfirmPage),
+    RouterModule.forChild([{ path: '', component: ConfirmPage }])
   ],
 })
 export class ConfirmPageModule {}
