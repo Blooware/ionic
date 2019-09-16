@@ -749,7 +749,7 @@ var mytests = function() {
                 },
                 function () {
                   db.readTransaction(function (tx) {
-                    tx.executeSql(';; CREATE TABLE ExtraTestTable4 (data)');
+                    tx.executeSql('; CREATE TABLE ExtraTestTable4 (data)');
                   }, checkDone, fail);
                 },
                 function () {

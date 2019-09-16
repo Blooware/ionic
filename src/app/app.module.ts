@@ -19,6 +19,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { AwsProvider } from './api/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './cognito/auth.service';
+import { NavigateService } from './navigate.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +34,8 @@ import { HttpClientModule } from '@angular/common/http';
     Camera,
     BarcodeScanner,
     AwsProvider,
-    
+    AuthService,
+    NavigateService,    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

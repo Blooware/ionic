@@ -1,29 +1,15 @@
-import { Component } from '@angular/core';
-
-
-//import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-
-import { PhotoService } from '../services/photo.service';
-
-
-
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  templateUrl: './tab2.page.html',
+  styleUrls: ['./tab2.page.scss'],
 })
-export class Tab2Page {
-  currentImage;
-  constructor(public photoService: PhotoService) {  }
+export class Tab2Page implements OnInit {
 
-  
-  
+  constructor() { }
 
-ngOnInit() {
-  this.photoService.loadSaved();
-}
-
-
+  ngOnInit() {
+  }
 
 }

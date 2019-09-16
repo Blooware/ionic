@@ -1,0 +1,46 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+<ion-content padding>
+  <form (ngSubmit)="login()" class="text-center justify-content-center align-items-center align-content-center align-self-center flex-nowrap m-auto" style="padding: 40px;max-width: 512px;">
+
+    <p class="text-center" style="padding-top: 20px; font-weight: bold;">{{message}}</p>
+    <p class="text-center" style="color: red;padding-top: 20px; font-weight: bold;">{{error}}</p>
+
+    <!--email input-->
+    <div class="form-group" style="margin-top: 50px;" *ngIf="showForm">
+      <ion-item>
+        <ion-input [(ngModel)]="loginForm.email" type="email" name="email" required placeholder="Email"
+          style="margin-top: 10px;"></ion-input>
+      </ion-item>
+    </div>
+
+    <!--password-->
+    <div class="form-group" *ngIf="showForm">
+      <ion-item>
+        <ion-input [(ngModel)]="loginForm.password" [type]="getType()" name="password" required placeholder="Password">
+        </ion-input>
+        <ion-icon name="eye" item-right (click)="toggleTextPassword()"></ion-icon>
+      </ion-item>
+    </div>
+
+    <!--login button-->
+    <div class="form-group" style="padding-top: 20px;">
+      <ion-button type="submit" style="width: 90%;">Log In</ion-button>
+    </div>
+
+    <!--Sign Up button-->
+    <div class="form-group" *ngIf="showForm">
+      <button ion-button type="button" (click)="signUp()" style="margin-top: 10px;border-radius: 300px;background-color: transparent;border: 0px;outline: none;width: 90%;color:#0078db;">
+        Sign Up
+      </button>
+    </div>
+
+    <!--Forgot Password-->
+    <div class="form-group" *ngIf="showForm">
+      <button ion-button type="button" (click)="forgotPassword()" style="margin-top: 10px;border-radius: 300px;background-color: transparent;border: 0px;outline: none;width: 90%;color:#d32641;">
+        Forgot Password
+      </button>
+    </div>
+
+  </form>
+
+</ion-content>
