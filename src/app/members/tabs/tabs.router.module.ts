@@ -11,8 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: 'tab1',
-        outlet: 'tab1',
-        component : Tab1PageModule
+        loadChildren: '../tab1/tab1.module#Tab1PageModule'
       },
       {
         path: '',

@@ -98,7 +98,7 @@ export class LoginPage {
 
   pushPage() {
     // this.appCtrl.getRootNav().push(TabsPage);
-    this.navigate.to(['members', 'home']);
+    this.navigate.to(['members']);
   }
 
   signUp() {
