@@ -105,6 +105,34 @@ export class AuthService {
     });
   }
 
+  resetPassword(userName) {
+    const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
+
+    // setup cognitoUser first
+
+
+    console.log(userName);
+    const cognitoUser = new AWSCognito.CognitoUser({
+      Username: userName,
+      Pool: userPool
+    });
+
+    // call forgotPassword on cognitoUser
+    cognitoUser.forgotPassword({
+      onSuccess: function (result) {
+        console.log('call result: ' + result);
+
+      },
+      onFailure: function (err) {
+        console.log(err);
+      }/*,
+      /*inputVerificationCode() { // this is optional, and likely won't be implemented as in AWS's example (i.e, prompt to get info)
+        var verificationCode = prompt('Please input verification code ', '');
+        var newPassword = prompt('Enter new password ', '');
+        cognitoUser.confirmPassword(verificationCode, newPassword, this);
+      }*/
+    });
+  }
   confirmPassword(userName, verificationCode, newPassword) {
     const userPool = new AWSCognito.CognitoUserPool(this._POOL_DATA);
 

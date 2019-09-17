@@ -29,7 +29,7 @@ export class SignupPage {
       this.cognitoService.signUp(this.e, this.p).then(
         res => {
           console.log(res);
-          this.navigate.to(['confirm'], {message: "You need to verify your account. Check your email for"}) 
+          this.navigate.to(['confirm'], false, {message: "You need to verify your account. Check your email.", e : this.e}); 
         },
         err => {
           console.log(err);

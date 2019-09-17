@@ -7,8 +7,7 @@
    
     <img src="../../assets/imgs/logo.png" width="70%" class="d-block justify-content-center m-auto" style="width: 70%;margin-bottom: 10px;padding-top: 60px;"
     />
-    <p class="text-center" style="padding-top: 20px; font-weight: bold;" >Check your email for the activation code.</p>
-    <p class="text-center" style="color: red;padding-top: 20px; font-weight: bold;" >{{error}}</p>
+    <p class="text-center" style="color: #000; padding-top: 20px; font-weight: bold;" >{{error}}</p>
     <div class="form-group" style="margin-top: 71px;" *ngIf="hideMe">
       <ion-item>
         <ion-input [(ngModel)]="email"  type="email" name="email" required placeholder="Email" value="{{email}}" style="margin-top: 10px;"></ion-input>
@@ -20,10 +19,10 @@
       </ion-item>
     </div>
     <div class="form-group" style="padding-top: 40px;">
-      <button ion-button type="submit" style="margin-top: 10px;border-radius: 300px;background-color: #4286b7;border: 0px;outline: none;width: 90%;">Sign Up</button>
+      <ion-button type="submit" style="margin-top: 10px;border-radius: 300px;background-color: #4286b7;border: 0px;outline: none;width: 90%;">Confirm Account</ion-button>
     </div>
     <div class="form-group" style="padding-top: 40px;">
-      <button ion-button type="button" (click)="Login()" style="margin-top: 10px;border-radius: 300px;background-color: #ccc;color:#000;border: 0px;outline: none;width: 90%;">Cancel</button>
+      <button ion-button type="button" routerLink="/login" style="margin-top: 10px;border-radius: 300px;background-color: transparent;color:#0078db;border: 0px;outline: none;width: 90%;">Cancel</button>
     </div>
     
     
