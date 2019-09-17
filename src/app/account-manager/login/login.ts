@@ -24,31 +24,32 @@ export class LoginPage {
   error = null;
   message = null;
   showForm = true;
-  data : any;
+  data: any;
 
-  constructor(public storage: Storage, private alertCtrl: AlertController, public cognitoService: AuthService, public navigate: NavigateService, public route : ActivatedRoute, public router : Router) {
+  constructor(public storage: Storage, private alertCtrl: AlertController, public cognitoService: AuthService, public navigate: NavigateService, public route: ActivatedRoute, public router: Router) {
     this.route.queryParams.subscribe(params => {
-      if (params && params.special) {
-        let navParams = params;
-        this.message = navParams.get("message");
-        if (navParams.get("p")) {
-          this.showForm = false;
-          this.loginForm.password = navParams.get("p");
-          this.loginForm.email = navParams.get("e");
-        }
-      }
+      this.message = params.message;
+      this.loginForm.password = params.p;
+      this.loginForm.email = params.e
     });
   }
 
   passwordCheckbox;
 
   login() {
-    this.cognitoService.login(this.loginForm.email, this.loginForm.password);
+    let disObject = this;
+    this.cognitoService.login(this.loginForm.email, this.loginForm.password).then(function () {
+
+      disObject.error = null;
+    }).catch(function (e) {
+      console.log(e);
+      disObject.error = e.message;
+    });;
   }
 
-  forgotPassword() {
+  reset() {
     if (this.loginForm.email) {
-      this.navigate.to('reset', { email: this.loginForm.email });
+      this.navigate.to(['reset'], false, { email: this.loginForm.email });
     } else {
       this.error = "Please enter your email";
     }
@@ -62,7 +63,7 @@ export class LoginPage {
   public toggleTextPassword(): void {
     this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword == true) ? false : true;
   }
-  
+
   public getType() {
     return this.isActiveToggleTextPassword ? 'password' : 'text';
   }

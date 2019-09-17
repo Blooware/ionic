@@ -5,8 +5,7 @@
   <form (ngSubmit)="register()" class="text-center justify-content-center align-items-center align-content-center align-self-center flex-nowrap m-auto"
     style="padding: 40px;max-width: 512px;">
    
-    <img src="../../assets/imgs/logo.png" width="70%" class="d-block justify-content-center m-auto" style="width: 70%;margin-bottom: 10px;padding-top: 60px;"
-    />
+   
     <p class="text-center" style="color: red;padding-top: 20px; font-weight: bold;" >{{error}}</p>
     <div class="form-group" style="margin-top: 50px;">
       <ion-item>
@@ -25,13 +24,13 @@
     </div>
   
     <div class="form-group" style="padding-top: 20px;">
-      <button ion-button type="submit" style="margin-top: 10px;border-radius: 300px;background-color: #4286b7;border: 0px;outline: none;width: 90%;">Agree to Terms and Sign Up</button>
+      <ion-button type="submit" expand="block" style="border:0px; --box-shadow: none;--border-radius: 0px;" color="primary">Agree to Terms and Sign Up</ion-button>
     </div>
     <div class="form-group" style="padding-top: 10px;">
-      <button ion-button type="button" (click)="Confirm()" style="margin-top: 10px;border-radius: 300px;background-color: #ccc;color:#000;border: 0px;outline: none;width: 90%;">Confirm Account</button>
+      <ion-button type="button" routerLink="/confirm" expand="block" style="border:0px; --box-shadow: none;--border-radius: 0px;" color="secondary">Confirm Account</ion-button>
     </div>
     <div class="form-group" style="padding-top: 10px;">
-      <button ion-button type="button" (click)="Login()" style="margin-top: 10px;border-radius: 300px;background-color: transparent;border: 0px;outline: none;width: 90%;color:#0078db;">Cancel</button>
+      <ion-button type="button" routerLink="/login" expand="block" style="border:0px; --box-shadow: none;--border-radius: 0px;" color="light">Cancel</ion-button>
     </div>
     
     <p style="margin-top: 15px;padding-top: 137px;">

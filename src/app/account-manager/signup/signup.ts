@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams} from "@ionic/angular";
+import { NavController} from "@ionic/angular";
 import { ConfirmPage } from "../confirm/confirm";
 import { LoginPage } from "../login/login";
 import { AuthService } from "../../services/cognito/auth.service";
@@ -20,7 +20,7 @@ export class SignupPage {
   p: string;
   cp: string;
   error = null;
-  constructor(public cognitoService: AuthService, public navCtrl: NavController, public navParams: NavParams, public navigate : NavigateService) {
+  constructor(public cognitoService: AuthService, public navCtrl: NavController, public navigate : NavigateService) {
   }
 
   register() {
@@ -29,31 +29,19 @@ export class SignupPage {
       this.cognitoService.signUp(this.e, this.p).then(
         res => {
           console.log(res);
-          this.navigate.to('login', {message: "You need to verify your account. Check your email for"}) 
+          this.navigate.to(['confirm'], false, {message: "You need to verify your account. Check your email.", e : this.e}); 
         },
         err => {
           console.log(err);
           this.error = err.message;
         }
       );
+
+
     }else{
       this.error = "Passwords don't match";
     }
     
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SignupPage');
-  }
-
-  Login() {
-    //this.appCtrl.getRootNav().push(LoginPage);
-    this.navigate.to('login');
-  }
-  
-  Confirm() {
-    //this.appCtrl.getRootNav().push(ConfirmPage);
-    this.navigate.to('confirm');
   }
 
   privacy() {

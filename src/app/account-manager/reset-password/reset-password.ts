@@ -3,6 +3,7 @@ import { NavController, NavParams } from "@ionic/angular";
 import { AuthService } from "../../services/cognito/auth.service";
 import { LoginPage } from "../login/login";
 import { NavigateService } from '../../navigate.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /**
  * Generated class for the ResetPasswordPage page.
@@ -19,8 +20,11 @@ export class ResetPasswordPage {
 
   error = null;
   loginForm = { password: null, code: null, email: null }
-  constructor(public navCtrl: NavController, public navParams: NavParams, public cognitoService: AuthService, public navigate : NavigateService) {
-    this.loginForm.email = navParams.get("email");
+  constructor(public cognitoService: AuthService, public navigate: NavigateService, public route: ActivatedRoute, public router: Router) {
+    this.route.queryParams.subscribe(params => {
+      this.loginForm.email = params.email;
+      this.cognitoService.resetPassword(params.email);
+    });
   }
 
   ionViewDidLoad() {
@@ -30,26 +34,26 @@ export class ResetPasswordPage {
 
   confirmReset() {
     this.cognitoService.confirmPassword(this.loginForm.email, this.loginForm.code, this.loginForm.password).then(val => {
-     // this.appCtrl.getRootNav().push(LoginPage, {message : "Password reset successful. Login below."});
+      // this.appCtrl.getRootNav().push(LoginPage, {message : "Password reset successful. Login below."});
 
-      this.navigate.to('login', {message : "Password reset successful. Login below."});
+      this.navigate.to(['login'], false, { message: "Password reset successful. Login below." });
     }, err => {
       this.error = err.message;
     });
   }
 
-  logIn(){
-   // this.appCtrl.getRootNav().push(LoginPage);
+  logIn() {
+    // this.appCtrl.getRootNav().push(LoginPage);
     this.navigate.to('login');
   }
 
-  
+
   isActiveToggleTextPassword: Boolean = true;
-  public toggleTextPassword(): void{
-      this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword==true)?false:true;
+  public toggleTextPassword(): void {
+    this.isActiveToggleTextPassword = (this.isActiveToggleTextPassword == true) ? false : true;
   }
   public getType() {
-      return this.isActiveToggleTextPassword ? 'password' : 'text';
+    return this.isActiveToggleTextPassword ? 'password' : 'text';
   }
 
 }
