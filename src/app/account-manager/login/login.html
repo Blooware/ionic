@@ -24,20 +24,20 @@
 
     <!--login button-->
     <div class="form-group" style="padding-top: 20px;">
-      <ion-button type="submit" style="width: 90%;">Log In</ion-button>
+      <ion-button type="submit" style="border:0px; --box-shadow: none;--border-radius: 0px;" color="primary" expand="block">Log In</ion-button>
     </div>
 
     <!--Sign Up button-->
     <div class="form-group" *ngIf="showForm">
-      <button ion-button type="button" (click)="signUp()" style="margin-top: 10px;border-radius: 300px;background-color: transparent;border: 0px;outline: none;width: 90%;color:#0078db;">
+      <ion-button type="button" (click)="signUp()" expand="block" style="border:0px; --box-shadow: none;--border-radius: 0px;" color="secondary">
         Sign Up
-      </button>
+      </ion-button>
     </div>
 
     <!--Forgot Password-->
     <div class="form-group" *ngIf="showForm">
-      <button ion-button type="button" (click)="reset()" style="margin-top: 10px;border-radius: 300px;background-color: transparent;border: 0px;outline: none;width: 90%;color:#d32641;">
-        Forgot Password
+      <button ion-button type="button" (click)="reset()" style="margin-top: 10px;border-radius: 300px;background-color: transparent;border: 0px;outline: none;width: 90%;color:#aaa;;">
+        Forgot Password?
       </button>
     </div>
 
